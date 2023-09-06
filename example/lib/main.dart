@@ -4,7 +4,23 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await FastCachedImageConfig.init(clearCacheAfter: const Duration(days: 15));
+  await FastCachedImageConfig.init(
+    clearCacheAfter: const Duration(days: 15),
+    headers: {
+      // 'Accept': 'application/json; charset=UTF-8',
+      // 'Content-Type': 'application/json; charset=UTF-8',
+      // 'Access-Control-Allow-Credentials': 'true',
+      // 'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Methods': '*',
+      // 'Referrer-Policy': 'no-referrer-when-downgrade',
+      // 'Access-Control-Allow-Headers': 'Content-Type',
+      "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+      "Access-Control-Allow-Credentials":
+          true, // Required for cookies, authorization headers with HTTPS
+      "Access-Control-Allow-Headers":
+          "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+    },
+  );
 
   runApp(const MyApp());
 }
@@ -35,7 +51,8 @@ class _MyAppState extends State<MyApp> {
             height: 150,
             width: 150,
             child: FastCachedImage(
-              url: url1,
+              url:
+                  'https://skina-production.s3.eu-north-1.amazonaws.com/717/IMG-%282%29.jpg',
               fit: BoxFit.cover,
               fadeInDuration: const Duration(seconds: 1),
               errorBuilder: (context, exception, stacktrace) {
